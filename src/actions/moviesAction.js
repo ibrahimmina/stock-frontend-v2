@@ -1,6 +1,8 @@
 import Axios from "axios";
 import { GET_MOVIES_SUCCESS, GET_MOVIES_ERROR } from "./actionTypes";
 
+Axios.defaults.baseURL = 'https://tidal-muddy-hacksaw.glitch.me';
+
 export const getMovies = () => {
   return async (dispatch) => {
     try {
