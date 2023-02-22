@@ -1,5 +1,7 @@
 {
     "rewrites":  [
-      {"source": "/api/(.*)", "destination": "https://tidal-muddy-hacksaw.glitch.me/"}
+      {"source": "/api/:path*", 
+      "destination": "https://tidal-muddy-hacksaw.glitch.me/:path*"
+    }
     ]
 }

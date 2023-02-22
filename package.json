@@ -36,5 +36,9 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0"
   },
-  "proxy": "https://tidal-muddy-hacksaw.glitch.me"
+  "proxy": {
+    "/api": {
+      "target": "https://tidal-muddy-hacksaw.glitch.me"
+    }
+  }
 }
