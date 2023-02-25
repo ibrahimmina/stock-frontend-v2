@@ -7,9 +7,8 @@ export default function Footer() {
         style={{ background: "#292a2b", fontSize: "20px", textAlign: "center" }}
         className="text-white py-4 m-0"
       >
-        made by orif milod
+        Copyright 2023 - Stock Analysis App
       </p>
     </div>
   );
 }
-

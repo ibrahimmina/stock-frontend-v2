@@ -12,12 +12,19 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Stocks from "./pages/Stocks";
+import Industries from "./pages/Industries";
 // import MovieForm from './components/movieForm';
 
 import "./App.css";
 
 import { Provider } from "react-redux";
 import store from "./store";
+import Axios from "axios";
+
+Axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+
+console.log("BASE URL = " + process.env.REACT_APP_BASE_URL);
 
 class App extends Component {
   render() {
@@ -31,8 +38,9 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route path="/resigter" component={Register} />
               <Route path="/movies" exact component={Movies} />
-
-              <Redirect exact from="/" to="/movies" />
+              <Route path="/stocks" exact component={Stocks} />
+              <Route path="/country/:country" exact component={Industries} />
+              <Redirect exact from="/" to="/stocks" />
             </Switch>
             <Footer />
           </div>
