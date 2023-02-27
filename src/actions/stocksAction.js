@@ -6,6 +6,8 @@ import {
   GET_STOCKS_COUNTRY_DATA_ERROR,
   GET_ALL_INDUSTRIES_DATA_SUCCESS,
   GET_ALL_INDUSTRIES_DATA_ERROR,
+  GET_STOCKS_COUNTRY_INDUSTRY_DATA_SUCCESS,
+  GET_STOCKS_COUNTRY_INDUSTRY_DATA_ERROR,
 } from "./actionTypes";
 
 export const GET_ALL_COUNTRIES_DATA = () => {
@@ -36,8 +38,25 @@ export const GET_STOCKS_COUNTRY_DATA = () => {
   };
 };
 
+export const GET_STOCKS_COUNTRY_INDUSTRY_DATA = (country, industry) => {
+  return async (dispatch) => {
+    try {
+      const result = await Axios.post("/api/stocks/stockcountryindustry", {
+        country: country,
+        industry: industry,
+      });
+      console.log(result);
+      dispatch({
+        type: GET_STOCKS_COUNTRY_INDUSTRY_DATA_SUCCESS,
+        payload: result.data.stocks,
+      });
+    } catch (error) {
+      dispatch({ type: GET_STOCKS_COUNTRY_INDUSTRY_DATA_ERROR, error });
+    }
+  };
+};
+
 export const GET_ALL_INDUSTRIES_DATA = (country) => {
-  console.log("country = " + country);
   return async (dispatch) => {
     try {
       const result = await Axios.post("/api/stocks/industries", {

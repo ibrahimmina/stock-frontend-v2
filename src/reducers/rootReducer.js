@@ -4,6 +4,7 @@ import movieReducer from "./movieReducer";
 import genreReducer from "./genreReducer";
 import stockReducer from "./stockReducer";
 import industryReducer from "./industryReducer";
+import industryCountryReducer from "./industryCountryReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   genre: genreReducer,
   stock: stockReducer,
   industry: industryReducer,
+  industriesCountry: industryCountryReducer,
 });

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
-
+import { Link } from "react-router-dom";
 import { createIndustryData } from "../../utils";
 
 import { Loading } from "../../components/common";
@@ -39,20 +39,56 @@ class Industries extends Component {
     console.log(filterData);
 
     options = {
-      title: "Country Industry Analysis",
-      hAxis: { title: "Number of Analyzed Stock" },
-      vAxis: { title: "Average Rating" },
-      bubble: { textStyle: { fontSize: 11 } },
+      width: 400,
+      height: 120,
+      minorTicks: 0.5,
+      min: -1,
+      max: 1,
+      legend: "none",
     };
+    const results = [];
+
+    industries.forEach((industry, i) => {
+      if (industry["_id"] != null) {
+        let data = [
+          ["Industry", "Average Rating"],
+          ["", industry["avgRating"]],
+        ];
+
+        results.push(
+          <div class="col-3" key={i}>
+            <div class="card text-bg-dark">
+              <Chart
+                chartType="Gauge"
+                width="100%"
+                height="100%"
+                data={data}
+                options={options}
+              />
+              <div class="card-body">
+                <p class="card-text">
+                  <Link
+                    to={
+                      "/industrycountry/" +
+                      `${this.props.match.params.country}` +
+                      "/" +
+                      `${industry["_id"]}`
+                    }
+                  >
+                    {industry["_id"]}
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    });
 
     return (
-      <Chart
-        chartType="ScatterChart"
-        width="100%"
-        height="400px"
-        data={filterData}
-        options={options}
-      />
+      <div class="container text-center text-bg-dark">
+        <div class="row">{results}</div>
+      </div>
     );
   }
 }
