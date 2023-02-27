@@ -27,42 +27,32 @@ function Navbar(props) {
   }
 
   return (
-    <nav className="nav-wrapper">
-      <div id="burger" class="ico-btn" onClick={toggleNav}>
-        <span class="ico-btn__burger"></span>
-      </div>
-
-      {/* <Link className="nav-brand" to="/">iCinema</Link> */}
-
-      <div id="slider" className="slider">
-        <ul className="list">
-          <Link onClick={toggleNav} to="/movies">
+    <header class="mb-auto">
+      <div>
+        <h3 class="float-md-start mb-0">Cover</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+          <Link
+            class="nav-link fw-bold py-1 px-0 active"
+            aria-current="page"
+            to="/stocks"
+          >
             Home
           </Link>
-          {!props.loggedIn ? (
-            <>
-              <Link onClick={toggleNav} to="/login">
-                Login
-              </Link>
-
-              <Link onClick={toggleNav} to="/resigter">
-                Register
-              </Link>
-            </>
-          ) : (
-            <Link
-              onClick={() => {
-                toggleNav();
-                props.signOut();
-              }}
-              to="/#"
-            >
-              Log out
-            </Link>
-          )}
-        </ul>
+          <Link class="nav-link fw-bold py-1 px-0" to="/pricing">
+            Pricing
+          </Link>
+          <Link class="nav-link fw-bold py-1 px-0" to="/faq">
+            FAQ
+          </Link>
+          <Link class="nav-link fw-bold py-1 px-0" to="/login">
+            Login
+          </Link>
+          <Link class="nav-link fw-bold py-1 px-0" to="/register">
+            Register
+          </Link>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 }
 

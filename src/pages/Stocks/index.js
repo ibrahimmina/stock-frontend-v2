@@ -36,7 +36,10 @@ class Stocks extends Component {
     var selectHandler = function (e) {
       window.location = data.getValue(chart.getSelection()[0]["row"], 1);
     };
-
+    const options = {
+      backgroundColor: "#212529",
+      colorAxis: { minValue: -1, maxValue: 1 },
+    };
     return (
       <Chart
         chartEvents={[
@@ -53,7 +56,8 @@ class Stocks extends Component {
         ]}
         chartType="GeoChart"
         width="100%"
-        height="400px"
+        height="70%px"
+        options={options}
         data={filterData}
       />
     );

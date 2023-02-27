@@ -19,7 +19,7 @@ class RegisterForm extends React.Component {
     const { name, value } = input;
     const obj = { [name]: value };
     const schema = { [name]: this.schema[name] };
-    const { error } = Joi.validate(obj, schema);
+    const { error } = this.schema.validate(obj);
     return error ? error.details[0].message : null;
   };
 
@@ -36,8 +36,9 @@ class RegisterForm extends React.Component {
   };
 
   validate = () => {
-    const options = { abortEarly: false };
-    const result = Joi.validate(this.state.data, this.schema, options);
+    //const options = { abortEarly: false };
+    //const result = Joi.validate(this.state.data, this.schema, options);
+    const result = this.schema.validate(this.state.data);
     if (!result.error) return null;
 
     const errors = {};
@@ -48,21 +49,25 @@ class RegisterForm extends React.Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    const { password, passwordRepeat, email } = this.state.data;
+    const { password, passwordRepeat, email, username } = this.state.data;
     if (password !== passwordRepeat)
       this.setState({ passwordError: "The passwords doesn not match." });
-    else this.props.signUp({ email, password });
+    else this.props.signUp({ email, password, username });
   };
 
-  schema = {
-    email: Joi.string().email().required().label("Email"),
+  schema = Joi.object({
+    username: Joi.string().required().label("Name"),
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required()
+      .label("Email"),
     password: Joi.string().min(8).required().label("Password"),
     passwordRepeat: Joi.string().required().label("Repear Password"),
-  };
+  });
   render() {
     const { authMessage, loggedIn } = this.props;
     const { errors, passwordError } = this.state;
-    const { email, password, passwordRepeat } = this.state.data;
+    const { username, email, password, passwordRepeat } = this.state.data;
     if (loggedIn) this.props.history.push("/");
 
     return (
@@ -70,6 +75,17 @@ class RegisterForm extends React.Component {
         <div className="container">
           <h1 className="header">Register Form</h1>
           <form onSubmit={this.handleSubmit}>
+            <Input
+              name="username"
+              label="name"
+              type="text"
+              error={errors["username"]}
+              iconClass="fas fa-envelope"
+              onChange={this.handleChange}
+              placeholder="Please enter your name..."
+              value={username}
+              autoFocus
+            />
             <Input
               name="email"
               label="Email"

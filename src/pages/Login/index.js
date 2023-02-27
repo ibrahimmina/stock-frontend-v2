@@ -16,10 +16,13 @@ class Login extends React.Component {
     errors: {},
   };
 
-  schema = {
-    email: Joi.string().email().required().label("Email"),
+  schema = Joi.object({
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required()
+      .label("Email"),
     password: Joi.string().required().label("Password"),
-  };
+  });
 
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
@@ -37,13 +40,13 @@ class Login extends React.Component {
     const { name, value } = input;
     const obj = { [name]: value };
     const schema = { [name]: this.schema[name] };
-    const { error } = Joi.validate(obj, schema);
+    const { error } = this.schema.validate(obj);
     return error ? error.details[0].message : null;
   };
 
   validate = () => {
     const options = { abortEarly: false };
-    const result = Joi.validate(this.state.data, this.schema, options);
+    const result = this.schema.validate(this.state.data);
     if (!result.error) return null;
 
     const errors = {};
